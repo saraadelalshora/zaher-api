@@ -51,12 +51,16 @@ class UserAPIController extends Controller
                 'email' => 'required|email',
                 'password' => 'required',
             ]);
+
             if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+
                 // Authentication passed...
                 $user = auth()->user();
                 $user->device_token = $request->input('device_token', '');
                 $user->save();
                 return $this->sendResponse($user, 'User retrieved successfully');
+            }else{
+                return $this->sendError('unAuth', 401);
             }
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage(), 401);
