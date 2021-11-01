@@ -15,6 +15,7 @@ class Ad extends Model implements HasMedia
         getFirstMediaUrl as protected getFirstMediaUrlTrait;
     }
 
+    protected $hidden =['image'];
     protected $guarded = [];
     public static $rules = [
         'title'        => ['required','string','max:255'],
@@ -63,6 +64,9 @@ class Ad extends Model implements HasMedia
     {
         return $this->hasMedia('image') ? true : false;
     }
+
+
+  
 
 
 }
