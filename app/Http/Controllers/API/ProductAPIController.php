@@ -64,9 +64,24 @@ class ProductAPIController extends Controller
                 $this->productRepository->pushCriteria(new NearCriteria($request));
             }
 
+           
+            $products = $this->productRepository;
+            
+            if($request->from && $request->to){
+                $products = $products
+                ->scopeQuery(function($query) use($request){
+                    return $query->whereBetween('price',[$request->from, $request->to])->orderBy('price','desc');
+                });
+               
+
+             }
+ 
+             $products = $products->paginate(15);
+             
 //            $this->productRepository->orderBy('closed');
+
 //            $this->productRepository->orderBy('area');
-            $products = $this->productRepository->paginate(15);
+          
 
         } catch (RepositoryException $e) {
             return $this->sendError($e->getMessage());
