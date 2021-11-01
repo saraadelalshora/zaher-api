@@ -67,10 +67,12 @@ Route::resource('options', 'API\OptionAPIController');
 Route::middleware('auth:api')->group(function () {
     Route::group(['middleware' => ['role:client']], function () {
 
-        Route::get('get-addresses', 'API\UserAPIController@getAddresses')->name('get-addresses');
-        Route::post('add-addresses', 'API\UserAPIController@createAddresses')->name('add-addresses');
-        Route::patch('edit-addresses/{id}', 'API\UserAPIController@UpdateAddresses')->name('edit-addresses');
-        Route::delete('delete-addresses/{id}', 'API\UserAPIController@deleteAddresses')->name('delete-addresses');
+        Route::get('get-addresses', 'API\AddressApiController@getAddresses')->name('get-addresses');
+        Route::post('add-addresses', 'API\AddressApiController@createAddresses')->name('add-addresses');
+        Route::patch('edit-addresses/{id}', 'API\AddressApiController@UpdateAddresses')->name('edit-addresses');
+        Route::delete('delete-addresses/{id}', 'API\AddressApiController@deleteAddresses')->name('delete-addresses');
+
+        
 
         Route::post('add-cart', 'API\CartAPIController@store');
         Route::get('get-cart', 'API\CartAPIController@getCart');
