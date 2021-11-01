@@ -11,7 +11,7 @@ class AdApiController extends Controller
    public function topAds(){
 
     try{
-        $ads = Ad::where('position','top')->where('status','active')->orderBy('sort','asc')->take(3)->get();
+        $ads = Ad::with('media')->where('position','top')->where('status','active')->orderBy('sort','asc')->take(3)->get();
 
     } catch (\Exception $e) {
         return $this->sendError($e->getMessage());
@@ -22,7 +22,7 @@ class AdApiController extends Controller
    }
    public function bottomAds(){
     try{
-        $ads = Ad::where('position','bottom')->where('status','active')->orderBy('sort','asc')->take(3)->get();
+        $ads = Ad::with('media')->where('position','bottom')->where('status','active')->orderBy('sort','asc')->take(3)->get();
 
     } catch (\Exception $e) {
         return $this->sendError($e->getMessage());
