@@ -89,7 +89,8 @@ class AddressApiController extends Controller
 
     public function deleteAddresses(Request $request,$id){
  
-            DeliveryAddress::where('user_id',auth()->user()->id)->where('id',$id)->firstOrFail()->delete();
+             DeliveryAddress::where('user_id',auth()->user()->id)->where('id',$id)->firstOrFail()
+            ->delete();
             return $this->sendResponse('', 'Address Deleted Successfully');
      
     }
