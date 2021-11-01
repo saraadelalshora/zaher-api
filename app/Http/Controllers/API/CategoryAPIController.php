@@ -52,7 +52,7 @@ class CategoryAPIController extends Controller
         } catch (RepositoryException $e) {
             return $this->sendError($e->getMessage());
         }
-        $categories = $this->categoryRepository->all();
+        $categories = $this->categoryRepository->withCount('products')->all();
 
         return $this->sendResponse($categories->toArray(), 'Categories retrieved successfully');
     }
