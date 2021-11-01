@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Market;
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -68,21 +69,22 @@ class FullDatabaseController extends Controller
         // empty table 
         Product::query()->delete();
         foreach (json_decode($response->getContents()) as $getContents){
+            $getcategory= Category::where([['Category_Code', $getContents->Category_Code], ['Subcategory_Code', $getContents->Subcategory_code]])->first();
+            $category_id= !empty($getcategory)? $getcategory->id : null;
             $Product = Product::create([
                 'name'=> $getContents->Product_AR,
                 'Product_AR'=> $getContents->Product_AR,
                 'Product_EN'=> $getContents->Product_EN,
                 'price'=> $getContents->Price,
-                'market_id'=>'0',
-                'category_id'=>'0',
                 'Category_Code'=>$getContents->Category_Code,
                 'Category'=>$getContents->Category,
                 'Subcategory_code'=>$getContents->Subcategory_code,
                 'Subcategory'=>$getContents->Subcategory,
                 'Product_Id'=>$getContents->Product_Id,
+                'category_id'=> $category_id,
              ]);
           
         }
-        return response([['branches' => Market::all()],['massage'=>'Add successfully']],200);
+        return response([['branches' => Product::all()],['massage'=>'Add successfully']],200);
     }
 }
