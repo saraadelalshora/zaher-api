@@ -74,6 +74,9 @@ class Product extends Model implements HasMedia
         'Category',
         'Subcategory_code',
         'Subcategory',
+        'Product_AR',
+        'Product_EN',
+        'Product_Id',
     ];
     /**
      * The attributes that should be casted to native types.
