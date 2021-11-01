@@ -66,7 +66,7 @@ class ProductAPIController extends Controller
 
 //            $this->productRepository->orderBy('closed');
 //            $this->productRepository->orderBy('area');
-            $products = $this->productRepository->all();
+            $products = $this->productRepository->paginate(15);
 
         } catch (RepositoryException $e) {
             return $this->sendError($e->getMessage());
