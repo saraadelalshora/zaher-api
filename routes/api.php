@@ -24,7 +24,7 @@ Route::post('login', 'API\UserAPIController@login');
 Route::post('register', 'API\UserAPIController@register');
 Route::post('send_reset_link_email', 'API\UserAPIController@sendResetLinkEmail');
 Route::get('user', 'API\UserAPIController@user');
-Route::get('logout', 'API\UserAPIController@logout');
+Route::post('logout', 'API\UserAPIController@logout');
 Route::get('settings', 'API\UserAPIController@settings');
 
 Route::resource('fields', 'API\FieldAPIController');
