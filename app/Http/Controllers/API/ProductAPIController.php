@@ -76,6 +76,14 @@ class ProductAPIController extends Controller
                
 
              }
+            if($request->category_id){
+                $products = $products
+                ->scopeQuery(function($query) use($request){
+                    return $query->where('category_id', $request->category_id);
+                });
+               
+
+             }
  
              $products = $products->paginate(15);
              
