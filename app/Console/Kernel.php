@@ -15,6 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         Commands\AddProduct::class,
+        Commands\NewPrice::class,
+        Commands\OnHands::class,
     ];
 
     /**
@@ -27,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('product:add')->daily();
+        // $schedule->command('product:add');
     }
 
     /**

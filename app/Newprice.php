@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Newprice extends Model
 {
     //
+    protected $guarded=[];
 }
