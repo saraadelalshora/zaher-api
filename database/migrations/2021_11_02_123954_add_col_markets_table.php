@@ -15,7 +15,7 @@ class AddColMarketsTable extends Migration
     {
         Schema::table('markets', function (Blueprint $table) {
             //
-            $table->boolean('active')->default(1); 
+            // $table->boolean('active')->default(1); 
         });
     }
 
