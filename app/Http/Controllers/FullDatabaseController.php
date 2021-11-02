@@ -16,7 +16,7 @@ class FullDatabaseController extends Controller
             'headers' => ['content-type' => 'application/json', 'Accept' => 'applicatipon/json', 'charset' => 'utf-8']
         ]);
         // Create a request
-        $request = $client->get('http://197.246.6.61/APIs/branchs.php');
+        $request = $client->get('https://197.246.6.61/APIs/branchs.php');
         // Get the actual response without headers
         $response = $request->getBody();
         // empty table 
@@ -38,7 +38,7 @@ class FullDatabaseController extends Controller
             'headers' => ['content-type' => 'application/json', 'Accept' => 'applicatipon/json', 'charset' => 'utf-8']
         ]);
         // Create a request
-        $request = $client->get('http://197.246.6.61/APIs/categorys.php');
+        $request = $client->get('https://197.246.6.61/APIs/categorys.php');
         // Get the actual response without headers
         $response = $request->getBody();
   
@@ -63,7 +63,7 @@ class FullDatabaseController extends Controller
             'headers' => ['content-type' => 'application/json', 'Accept' => 'applicatipon/json', 'charset' => 'utf-8']
         ]);
         // Create a request
-        $request = $client->get('http://197.246.6.61/APIs/Product.php');
+        $request = $client->get('https://197.246.6.61/APIs/Product.php');
         // Get the actual response without headers
         $response = $request->getBody();
         // empty table 
