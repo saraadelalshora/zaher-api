@@ -86,6 +86,11 @@ Route::middleware('auth')->group(function () {
         'show'
     ]);
 
+    Route::post('offer/remove-media', 'OfferController@removeMedia');
+    Route::resource('offer', 'OfferController')->except([
+        'show'
+    ]);
+
     Route::resource('faqCategories', 'FaqCategoryController')->except([
         'show'
     ]);
