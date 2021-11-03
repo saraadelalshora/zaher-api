@@ -28,24 +28,24 @@ class PermissionDataTable extends DataTable
 
         return $dataTable
 
-            ->editColumn('class',function ($permission){
+            // ->editColumn('class',function ($permission){
 
-                return trans('lang.permission_'.explode('.',$permission->name)[0]);
+            //     return trans('lang.permission_'.explode('.',$permission->name)[0]);
 
-            })
-            ->editColumn('name',function ($permission){
+            // })
+            // ->editColumn('name',function ($permission){
 
-                return trans('lang.permission_'.$permission->name);
+            //     return trans('lang.permission_'.$permission->name);
 
-            })
-            ->editColumn('guard_name',function ($permission){
+            // })
+            // ->editColumn('guard_name',function ($permission){
 
-                return trans('lang.permission_'.$permission->guard_name);
+            //     return trans('lang.permission_'.$permission->guard_name);
 
-            })
-            ->editColumn('roles', function ($permission) {
-                return json_encode(['permission' => trans('lang.permission_'.$permission->name), 'roles' => $permission->roles->pluck('name')->toArray()]);
-            })
+            // })
+            // ->editColumn('roles', function ($permission) {
+            //     return json_encode(['permission' => trans('lang.permission_'.$permission->name), 'roles' => $permission->roles->pluck('name')->toArray()]);
+            // })
             ->addColumn('action', 'settings.permissions.datatables_actions');
     }
 

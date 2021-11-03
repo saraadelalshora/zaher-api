@@ -61,6 +61,12 @@
                 <i class="nav-icon fa fa-folder"></i>@endif<p>{{trans('lang.category_plural')}}</p></a>
     </li>
 @endcan
+@can('offer.index')
+    <li class="nav-item">
+        <a class="nav-link {{ Request::is('offer*') ? 'active' : '' }}" href="{!! route('offer.index') !!}">@if($icons)
+                <i class="nav-icon fa fa-folder"></i>@endif<p>{{trans('lang.offer_plural')}}</p></a>
+    </li>
+@endcan
 
     <li class="nav-item">
         <a class="nav-link {{ Request::is('ads*') ? 'active' : '' }}" href="{!! route('ads.index') !!}">@if($icons)

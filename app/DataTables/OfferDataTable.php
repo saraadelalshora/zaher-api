@@ -54,6 +54,7 @@ class OfferDataTable extends DataTable
      */
     public function html()
     {
+       
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
@@ -95,6 +96,7 @@ class OfferDataTable extends DataTable
                 'searchable' => false,
             ]
         ];
+        return $columns;
     }
 
     /**

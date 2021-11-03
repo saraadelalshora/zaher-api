@@ -8,26 +8,26 @@ use App\DataTables\OfferDataTable;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\CreateOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
-use App\Repositories\OfferRepostiryRepository;
-use App\Repositories\UploOfferRepostiryRepository;
+use App\Repositories\OfferRepository;
+use App\Repositories\UploadRepository;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class offerController extends Controller
 {
-    /** @var  OfferRepostiryRepository */
-    private $OfferRepostiryRepository;
+    /** @var  OfferRepository */
+    private $OfferRepository;
 
    
     /**
-     * @var UploOfferRepostiryRepository
+     * @var UploadRepository
      */
-    private $uploOfferRepostiryRepository;
+    private $uploOfferRepository;
 
-    public function __construct(OfferRepostiryRepository $offerRepo,  UploOfferRepostiryRepository $uploadRepo)
+    public function __construct(OfferRepository $offerRepo,  UploadRepository $uploadRepo)
     {
         parent::__construct();
-        $this->OfferRepostiryRepository = $offerRepo;
-        $this->uploOfferRepostiryRepository = $uploadRepo;
+        $this->OfferRepository = $offerRepo;
+        $this->uploOfferRepository = $uploadRepo;
     }
 
     /**
@@ -65,9 +65,9 @@ class offerController extends Controller
 
         
         try {
-            $offer = $this->OfferRepostiryRepository->create($input);
+            $offer = $this->OfferRepository->create($input);
             if (isset($input['image']) && $input['image']) {
-                $cacheUpload = $this->uploOfferRepostiryRepository->getByUuid($input['image']);
+                $cacheUpload = $this->uploOfferRepository->getByUuid($input['image']);
                 $mediaItem = $cacheUpload->getMedia('image')->first();
                 $mediaItem->copy($offer, 'image');
             }
@@ -89,7 +89,7 @@ class offerController extends Controller
      */
     public function show($id)
     {
-        $offer = $this->OfferRepostiryRepository->findWithoutFail($id);
+        $offer = $this->OfferRepository->findWithoutFail($id);
 
         if (empty($offer)) {
             Flash::error('Offer not found');
@@ -109,7 +109,7 @@ class offerController extends Controller
      */
     public function edit($id)
     {
-        $offer = $this->OfferRepostiryRepository->findWithoutFail($id);
+        $offer = $this->OfferRepository->findWithoutFail($id);
 
 
 
@@ -132,7 +132,7 @@ class offerController extends Controller
      */
     public function update($id, UpdateOfferRequest $request)
     {
-        $offer = $this->OfferRepostiryRepository->findWithoutFail($id);
+        $offer = $this->OfferRepository->findWithoutFail($id);
 
         if (empty($offer)) {
             Flash::error('Offer not found');
@@ -140,10 +140,10 @@ class offerController extends Controller
         }
         $input = $request->all();
          try {
-            $offer = $this->OfferRepostiryRepository->update($input, $id);
+            $offer = $this->OfferRepository->update($input, $id);
 
             if (isset($input['image']) && $input['image']) {
-                $cacheUpload = $this->uploOfferRepostiryRepository->getByUuid($input['image']);
+                $cacheUpload = $this->uploOfferRepository->getByUuid($input['image']);
                 $mediaItem = $cacheUpload->getMedia('image')->first();
                 $mediaItem->copy($offer, 'image');
             }
@@ -166,7 +166,7 @@ class offerController extends Controller
      */
     public function destroy($id)
     {
-        $offer = $this->OfferRepostiryRepository->findWithoutFail($id);
+        $offer = $this->OfferRepository->findWithoutFail($id);
 
         if (empty($offer)) {
             Flash::error('offer not found');
@@ -174,7 +174,7 @@ class offerController extends Controller
             return redirect(route('offer.index'));
         }
 
-        $this->OfferRepostiryRepository->delete($id);
+        $this->OfferRepository->delete($id);
 
         Flash::success(__('lang.deleted_successfully', ['operator' => __('lang.offer')]));
 
@@ -188,7 +188,7 @@ class offerController extends Controller
     public function removeMedia(Request $request)
     {
         $input = $request->all();
-        $offer = $this->OfferRepostiryRepository->findWithoutFail($input['id']);
+        $offer = $this->OfferRepository->findWithoutFail($input['id']);
         try {
             if ($offer->hasMedia($input['collection'])) {
                 $offer->getFirstMedia($input['collection'])->delete();
