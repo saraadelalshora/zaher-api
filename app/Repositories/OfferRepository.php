@@ -6,7 +6,7 @@ use App\Offer;
 use InfyOm\Generator\Common\BaseRepository;
 
 
-class OfferRepostiryRepository extends BaseRepository
+class OfferRepository extends BaseRepository
 {
   
     /**
