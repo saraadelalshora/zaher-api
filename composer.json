@@ -13,6 +13,7 @@
         "barryvdh/laravel-ide-helper": "~2.0",
         "benwilkins/laravel-fcm-notification": "^4.0",
         "darryldecode/cart": "^4.2",
+        "dirape/token": "^2.3",
         "doctrine/dbal": "^2.7",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "~6.0",

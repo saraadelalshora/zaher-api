@@ -171,7 +171,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Dirape\Token\TokenServiceProvider::class
 
     ],
 
@@ -228,8 +228,8 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'HTMLFieldGenerator' => InfyOm\Generator\Utils\HTMLFieldGenerator::class,
 //        'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
-        'Cart' => Darryldecode\Cart\Facades\CartFacade::class
-
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
+        'Token' => \Dirape\Token\Facades\Facade::class
     ],
 
 ];
