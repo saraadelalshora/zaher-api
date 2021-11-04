@@ -190,7 +190,7 @@
     </li>
 @endcan
 
-@can('payments.index')
+{{-- @can('payments.index')
     <li class="nav-item has-treeview {{ Request::is('earnings*') || Request::is('driversPayouts*') || Request::is('marketsPayouts*') || Request::is('payments*') ? 'menu-open' : '' }}">
         <a href="#" class="nav-link {{ Request::is('earnings*') || Request::is('driversPayouts*') || Request::is('marketsPayouts*') || Request::is('payments*') ? 'active' : '' }}"> @if($icons)
                 <i class="nav-icon fa fa-credit-card"></i>@endif
@@ -226,7 +226,7 @@
 
         </ul>
     </li>
-@endcan
+@endcan --}}
 
 @can('app-settings')
     <li class="nav-item has-treeview {{ Request::is('settings/mobile*') || Request::is('slides*') ? 'menu-open' : '' }}">
@@ -346,11 +346,11 @@
             </li>
             @endcan
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{!! url('settings/payment/payment') !!}" class="nav-link {{  Request::is('settings/payment*') ? 'active' : '' }}">
                     @if($icons)<i class="nav-icon fa fa-credit-card"></i> @endif <p>{{trans('lang.app_setting_payment')}}</p>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="nav-item">
                 <a href="{!! url('settings/app/social') !!}" class="nav-link {{  Request::is('settings/app/social*') ? 'active' : '' }}">

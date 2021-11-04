@@ -1,5 +1,8 @@
 <?php
 use App\Offer;
+use App\Models\Order;
+use App\Notifications\NewOffer;
+use App\Notifications\NewOrder;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('driver')->group(function () {
@@ -80,9 +83,19 @@ Route::middleware('auth:api')->group(function () {
 
         Route::post('add-cart', 'API\CartAPIController@store');
         Route::get('get-cart', 'API\CartAPIController@getCart');
+        Route::get('get-unread-notifications', 'API\UserAPIController@getUnreadNotifications');
+        Route::post('read-notification', 'API\UserAPIController@mark_as_read_notification');
         Route::post('delete-cart', 'API\CartAPIController@deleteCart')->name('delete-cart');
 
+        Route::get('add-noti',function(){
+            $user = auth()->user();
+            $order = Order::findOrFail(1);
+            $offer = Offer::findOrFail(1);
+            
+            $user->notify(new NewOrder($order));
 
+            $user->notify(new NewOffer($offer));
+        });
 
 
 
