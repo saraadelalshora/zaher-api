@@ -1,6 +1,8 @@
 <?php
 use App\Offer;
 use App\Models\Order;
+use App\Events\OfferEvent;
+use App\Events\OrderEvent;
 use App\Notifications\NewOffer;
 use App\Notifications\NewOrder;
 use Illuminate\Support\Facades\Route;
@@ -92,7 +94,14 @@ Route::middleware('auth:api')->group(function () {
             $order = Order::findOrFail(1);
             $offer = Offer::findOrFail(1);
             
+
+
+            event(new OrderEvent($order, 'تحرك طلبك إليك ونحن في انتظار طلبك التالي'));
             $user->notify(new NewOrder($order));
+
+
+           
+            event(new OfferEvent($offer, 'هناك عرض من البان زاهر جديده'));
 
             $user->notify(new NewOffer($offer));
         });
