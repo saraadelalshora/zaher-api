@@ -34,7 +34,7 @@
              Request::is('settings/app/*') ||
              Request::is('settings/mail*') ||
              Request::is('settings/translation*') ||
-             Request::is('settings/payment*') ||
+            //  Request::is('settings/payment*') ||
              Request::is('settings/currencies*') ||
              Request::is('settings/customFields*')
  ? '' : 'collapsed-card' }}">
@@ -46,7 +46,7 @@
              Request::is('settings/app/*') ||
              Request::is('settings/mail*') ||
              Request::is('settings/translation*') ||
-             Request::is('settings/payment*') ||
+            //  Request::is('settings/payment*') ||
              Request::is('settings/currencies*') ||
              Request::is('settings/customFields*')
              ? 'fa-minus' : 'fa-plus' }}"></i>
@@ -73,11 +73,11 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{!! url('settings/payment/payment') !!}" class="nav-link {{  Request::is('settings/payment*') ? 'selected' : '' }}">
                     <i class="fa fa-credit-card"></i> {{trans('lang.app_setting_payment')}}
                 </a>
-            </li>
+            </li> --}}
 
             @can('currencies.index')
                 <li class="nav-item">

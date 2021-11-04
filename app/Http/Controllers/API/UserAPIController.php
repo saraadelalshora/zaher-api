@@ -251,4 +251,30 @@ class UserAPIController extends Controller
 
     }
 
+
+
+    public function getUnreadNotifications(Request $request)
+    {
+        $notifications = auth()->user()->unreadNotifications;
+
+        return response()->json(['status' => 'success', 'notifications' => $notifications]);
+    }
+
+    // public function notification(Request $request)
+    // {
+    //     $notifications = auth()->user()->notifications;
+
+    //     return response()->json(['status' => 'success', 'notifications' => $notifications]);
+    // }
+
+    public function mark_as_read_notification(Request $request)
+    {
+        $notifications = auth()->user()->unreadNotifications
+            ->when($request->notification_id, function ($query) use ($request) {
+                return $query->where('id', $request->notification_id);
+            })
+            ->markAsRead();
+
+        return response()->json(['status' => 'success', 'message' => 'marked']);
+    }
 }
