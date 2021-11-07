@@ -168,4 +168,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('uploads/store', 'API\UploadAPIController@store');
     Route::post('uploads/clear', 'API\UploadAPIController@clear');
+
+  
 });
+Route::post('contactus', 'API\Contactcontroller@send');
