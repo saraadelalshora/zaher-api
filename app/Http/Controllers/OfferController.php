@@ -12,12 +12,12 @@ use App\Repositories\OfferRepository;
 use App\Repositories\UploadRepository;
 use Prettus\Validator\Exceptions\ValidatorException;
 
-class offerController extends Controller
+class OfferController extends Controller
 {
     /** @var  OfferRepository */
     private $OfferRepository;
 
-   
+
     /**
      * @var UploadRepository
      */
@@ -63,7 +63,7 @@ class offerController extends Controller
     {
         $input = $request->all();
 
-        
+
         try {
             $offer = $this->OfferRepository->create($input);
             if (isset($input['image']) && $input['image']) {
@@ -118,7 +118,7 @@ class offerController extends Controller
 
             return redirect(route('offer.index'));
         }
-        
+
         return view('offer.edit')->with('offer', $offer);
     }
 
@@ -147,7 +147,7 @@ class offerController extends Controller
                 $mediaItem = $cacheUpload->getMedia('image')->first();
                 $mediaItem->copy($offer, 'image');
             }
-        
+
         } catch (ValidatorException $e) {
             Flash::error($e->getMessage());
         }
