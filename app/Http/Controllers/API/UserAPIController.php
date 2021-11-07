@@ -227,6 +227,9 @@ class UserAPIController extends Controller
                     $user->customFieldsValues()
                         ->updateOrCreate(['custom_field_id' => $value['custom_field_id']], $value);
                 }
+                if($request->password != null){
+                    $user = $this->userRepository->update($request->only(['password']), $id);
+                }
             }
         } catch (ValidatorException $e) {
             return $this->sendError($e->getMessage(), 401);

@@ -50,6 +50,7 @@ class User extends Authenticatable implements HasMedia
     public $fillable = [
         'name',
         'email',
+        'phone',
         'password',
         'api_token',
         'device_token',
