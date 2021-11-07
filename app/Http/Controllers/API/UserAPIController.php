@@ -211,7 +211,7 @@ class UserAPIController extends Controller
         try {
             if ($request->has('device_token')) {
                 $user = $this->userRepository->update($request->only('device_token'), $id);
-            } else {
+            }else{
                 $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->userRepository->model());
                 if (isset($input['avatar']) && $input['avatar']) {
                     $cacheUpload = $this->uploadRepository->getByUuid($input['avatar']);
@@ -227,10 +227,11 @@ class UserAPIController extends Controller
                     $user->customFieldsValues()
                         ->updateOrCreate(['custom_field_id' => $value['custom_field_id']], $value);
                 }
-                if($request->password != null){
-                    $user = $this->userRepository->update($request->only(['password']), $id);
-                }
+            
             }
+            if ($request->has('password') && $request->password != null) {
+                $user = $this->userRepository->update(['password' => Hash::make($request->input('password'))], $id);
+            } 
         } catch (ValidatorException $e) {
             return $this->sendError($e->getMessage(), 401);
         }
