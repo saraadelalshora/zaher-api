@@ -72,7 +72,12 @@
         <a class="nav-link {{ Request::is('ads*') ? 'active' : '' }}" href="{!! route('ads.index') !!}">@if($icons)
                 <i class="nav-icon fa fa-folder"></i>@endif<p>{{trans('lang.ad_plural')}}</p></a>
     </li>
-
+    @can('about.create')
+    <li class="nav-item">
+        <a class="nav-link {{ Request::is('about*') ? 'active' : '' }}" href="{!! route('about.create') !!}">@if($icons)
+                <i class="nav-icon fa fa-folder"></i>@endif<p>{{trans('lang.about_plural')}}</p></a>
+    </li>
+    @endif
 
 @can('products.index')
     <li class="nav-item has-treeview {{ Request::is('products*') || Request::is('options*') || Request::is('optionGroups*') || Request::is('productReviews*') || Request::is('nutrition*') ? 'menu-open' : '' }}">
