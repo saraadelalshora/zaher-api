@@ -85,6 +85,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('ads', 'AdController')->except([
         'show'
     ]);
+    Route::resource('about', 'AboutController')->except([
+        'show'
+    ]);
 
     Route::post('offer/remove-media', 'OfferController@removeMedia');
     Route::resource('offer', 'OfferController')->except([
