@@ -37,19 +37,18 @@
   <div class="card">
     <div class="card-header">
       <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
-        @can('about.index')
-        <li class="nav-item">
-          <a class="nav-link" href="{!! route('about.index') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.about_table')}}</a>
-        </li>
-        @endcan
         <li class="nav-item">
           <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-plus mr-2"></i>{{trans('lang.about_create')}}</a>
         </li>
       </ul>
     </div>
     <div class="card-body">
-      {!! Form::open(['route' => 'about.store']) !!}
+    {!! Form::model($about, ['route' => ['about.store'], 'method' => 'post']) !!}
+     
         <div class="row">
+        @if(isset($about) && $about->id)
+        <input type="hidden" name="id" value="{{$about->id}}">
+        @endif
           @include('about.fields')
         </div>
       {!! Form::close() !!}

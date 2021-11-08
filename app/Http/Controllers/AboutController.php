@@ -13,6 +13,9 @@ use Prettus\Validator\Exceptions\ValidatorException;
 
 class AboutController extends Controller
 {
+     /** @var  AboutRepository */
+     private $AboutRepository;
+
     public function __construct(AboutRepository $adRepo)
     {
         parent::__construct();
@@ -25,21 +28,17 @@ class AboutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(AboutDataTable $AboutDataTable)
+    public function index()
     {
-        return $AboutDataTable->render('about.index');
+       
+        return view('about.create',
+            [
+              'about'=> About::first()
+            ]);
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('about.create');
-    }
+    
 
     /**
      * Store a newly created About in storage.
@@ -53,7 +52,12 @@ class AboutController extends Controller
         $input = $request->except('files');
      
         try {
-            $About = $this->AboutRepository->create($input);
+            if(empty(About::first())){
+
+                $About = $this->AboutRepository->create($input);
+            }else{
+                $About = $this->AboutRepository->update($input, $request->input('id'));     
+            }
           
         } catch (ValidatorException $e) {
             Flash::error($e->getMessage());
@@ -92,15 +96,6 @@ class AboutController extends Controller
      */
     public function edit($id)
     {
-        $About = $this->AboutRepository->findWithoutFail($id);
-
-        if (empty($About)) {
-            Flash::error(__('lang.not_found', ['operator' => __('lang.About')]));
-
-            return redirect(route('about.index'));
-        }
-       
-        return view('about.edit')->with('About', $About);
     }
 
     /**
@@ -113,23 +108,7 @@ class AboutController extends Controller
      */
     public function update($id, UpdateAboutRequest $request)
     {
-        $About = $this->AboutRepository->findWithoutFail($id);
-
-        if (empty($About)) {
-            Flash::error('About not found');
-            return redirect(route('about.index'));
-        }
-        $input = $request->except('files');
-      try {
-            $About = $this->AboutRepository->update($input, $id);
-
-        } catch (ValidatorException $e) {
-            Flash::error($e->getMessage());
-        }
-
-        Flash::success(__('lang.updated_successfully', ['operator' => __('lang.About')]));
-
-        return redirect(route('about.index'));
+       
     }
 
     /**
@@ -141,19 +120,7 @@ class AboutController extends Controller
      */
     public function destroy($id)
     {
-        $About = $this->AboutRepository->findWithoutFail($id);
-
-        if (empty($About)) {
-            Flash::error('About not found');
-
-            return redirect(route('about.index'));
-        }
-
-        $this->AboutRepository->delete($id);
-
-        Flash::success(__('lang.deleted_successfully', ['operator' => __('lang.About')]));
-
-        return redirect(route('about.index'));
+        
     }
 
 }

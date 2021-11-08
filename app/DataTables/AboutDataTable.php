@@ -44,6 +44,7 @@ class AboutDataTable extends DataTable
      */
     public function query(About $model)
     {
+      
         return $model->newQuery();
     }
 
@@ -55,18 +56,16 @@ class AboutDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('about-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->addAction(['title'=>trans('lang.actions'),'width' => '80px', 'printable' => false, 'responsivePriority' => '100'])
+            ->parameters(array_merge(
+                config('datatables-buttons.parameters'), [
+                    'language' => json_decode(
+                        file_get_contents(base_path('resources/lang/' . app()->getLocale() . '/datatable.json')
+                        ), true)
+                ]
+            ));
     }
 
     /**
@@ -93,7 +92,7 @@ class AboutDataTable extends DataTable
                 'searchable' => false,
             ]
         ];
-        return$columns;
+        return $columns;
     }
     /**
      * Export PDF using DOMPDF
