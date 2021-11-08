@@ -309,7 +309,7 @@ class UserAPIController extends Controller
      
             Mail::to($user->email)->send(new ResetPassMail($user, $resetPassCode));
 
-            return $this->sendResponse(true, 'Reset sent successfully');
+            return $this->sendResponse($resetPassCode, 'Reset sent successfully');
 
         } catch (\Throwable $th) {
             throw $th;
