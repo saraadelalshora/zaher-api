@@ -10,19 +10,22 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
+use App\Mail\ResetPassMail;
 use Illuminate\Http\Request;
 use App\Models\DeliveryAddress;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
+use Mail;
 use App\Repositories\UploadRepository;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 use App\Repositories\CustomFieldRepository;
 use Prettus\Validator\Exceptions\ValidatorException;
-
 
 class UserAPIController extends Controller
 {
@@ -280,5 +283,61 @@ class UserAPIController extends Controller
             ->markAsRead();
 
         return response()->json(['status' => 'success', 'message' => 'marked']);
+    }
+
+    public function requestPasswordReset(Request $request)
+    {
+        $rules = [
+            'email'     => 'required|email',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+             return $this->sendError($validator->errors()->all());
+        }
+        $user = User::where('email', $request->input('email'))->first();
+        if (!$user) {
+             return $this->sendError('some Errors Happened',401);
+        }
+        try {
+        $resetPassCode = substr(time(), 4);
+        $checkIfHasResetBefore = DB::table('password_resets')->where('email', $user->email)->first();
+        if ($checkIfHasResetBefore) {
+            DB::table('password_resets')->where('email', $user->email)->orWhere('email', $request->input('email'))->update(['token' => $resetPassCode]);
+        } else {
+            DB::table('password_resets')->insert(['email' => $user->email, 'token' => $resetPassCode]);
+        }
+     
+            Mail::to($user->email)->send(new ResetPassMail($user, $resetPassCode));
+
+            return $this->sendResponse(true, 'Reset sent successfully');
+
+        } catch (\Throwable $th) {
+            throw $th;
+            return $this->sendError($th->getMessage(), 401);
+        }
+       
+    }
+    public function resetPassword(Request $request)
+    {
+        $rules = [
+            'reset_code'             => 'required|min:6',
+            'new_password'           => 'required|min:8',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors()->all(),401);
+        }
+        $resetCode = DB::table('password_resets')->where('token', $request->reset_code)->first();
+        if (!$resetCode) {
+            return $this->sendError('Code Not Found',401);
+        }
+        $user = User::where('email', $resetCode->email)->first();
+        if (!$user) {
+            return $this->sendError('Not found User',[]);
+        }
+        $request->merge(['password' => $request->new_password]);
+        $user->update(['password' => Hash::make($request->input('password'))]);
+        DB::table('password_resets')->where('token', $request->reset_code)->delete();
+        return $this->sendResponse(true,'Password reset successuflly');
     }
 }
