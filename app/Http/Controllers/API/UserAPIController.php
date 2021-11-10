@@ -317,6 +317,21 @@ class UserAPIController extends Controller
         }
        
     }
+    public function confirmcode(Request $request)
+    {
+        $rules = [
+            'reset_code'             => 'required|min:6',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors()->all(),401);
+        }
+        $resetCode = DB::table('password_resets')->where('token', $request->reset_code)->first();
+        if (!$resetCode) {
+            return $this->sendError('Code Not Found',401);
+        }
+        return $this->sendResponse(true,'Password reset successuflly');
+    }
     public function resetPassword(Request $request)
     {
         $rules = [
