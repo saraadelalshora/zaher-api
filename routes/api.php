@@ -28,8 +28,9 @@ Route::prefix('manager')->group(function () {
 
 Route::post('login', 'API\UserAPIController@login');
 Route::post('register', 'API\UserAPIController@register');
-Route::post('send_reset_link_email', 'API\UserAPIController@sendResetLinkEmail');
+// Route::post('send_reset_link_email', 'API\UserAPIController@sendResetLinkEmail');
 Route::post('password/email', 'API\UserAPIController@requestPasswordReset');
+Route::post('password/confirmcode', 'API\UserAPIController@confirmcode');
 Route::post('password/reset', 'API\UserAPIController@resetPassword');
 Route::get('user', 'API\UserAPIController@user');
 Route::post('logout', 'API\UserAPIController@logout');
