@@ -172,4 +172,4 @@ Route::middleware('auth:api')->group(function () {
   
 });
 Route::post('contactus', 'API\Contactcontroller@send');
-Route::post('about', 'API\AboutController@about');
+Route::get('about', 'API\AboutController@about');

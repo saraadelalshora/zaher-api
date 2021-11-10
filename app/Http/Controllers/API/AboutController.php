@@ -17,7 +17,7 @@ class AboutController extends Controller
             return $this->sendError($e->getMessage());
         }
     
-        return $this->sendResponse($ads->toArray(), 'about retrieved successfully');
+        return $this->sendResponse($ads, 'about retrieved successfully');
     
        }
 }
