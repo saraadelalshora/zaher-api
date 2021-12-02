@@ -67,10 +67,15 @@ class ProductRepository extends BaseRepository implements CacheableInterface
     public function groupedByMarkets()
     {
         $products = [];
-        foreach ($this->where('market_id','!=',null)->get() as $model) {
-            if(!empty($model->market)){
-               $products[$model->market->name][$model->id] = $model->name;
-             }
+
+        //    $products = Product::with('market')->select('id','market_id','name')->get()->groupBy('market.name')->map(function($item,$key){
+        //             return  $item->pluck('name');
+        //    });
+        //    dd($products);
+        foreach ($this->where('market_id','!=',NULL)->get() as $model) {
+           if(!empty($model->market)){
+            $products[$model->market->name][$model->id] = $model->name;
+           }
         }
         return $products;
     }
@@ -96,5 +101,4 @@ class ProductRepository extends BaseRepository implements CacheableInterface
         $categories = Category::withSum('products.sells_count')->orderBy('products_sells_count_sum','DESC')->take(6)->get();
         return $categories;
     }
-    
 }

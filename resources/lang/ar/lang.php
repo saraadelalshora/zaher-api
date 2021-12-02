@@ -1438,4 +1438,12 @@ return [
     'app_setting_razorpay_secret_help' => '',
     'app_setting_become_store_owner' => '',
     'permission_' => '',
+    'app_setting_mobile_section_desc - 1' => '',
+    'app_setting_mobile_section_desc - 2' => '',
+    'app_setting_mobile_section_desc - 3' => '',
+    'app_setting_mobile_section_desc - 4' => '',
+    'app_setting_mobile_section_desc - 5' => '',
+    'app_setting_mobile_section_desc - 6' => '',
+    'app_setting_mobile_section_desc - 7' => '',
+    'sile' => '',
 ];
