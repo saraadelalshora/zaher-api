@@ -96,4 +96,5 @@ class ProductRepository extends BaseRepository implements CacheableInterface
         $categories = Category::withSum('products.sells_count')->orderBy('products_sells_count_sum','DESC')->take(6)->get();
         return $categories;
     }
+    
 }
