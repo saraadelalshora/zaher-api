@@ -61,6 +61,8 @@ class UserAPIController extends Controller
                 $user = auth()->user();
                 $user->device_token = $request->input('device_token', '');
                 $user->save();
+              //  $permissions=$user->getPermissionsViaRoles()->pluck('name');
+
                 return $this->sendResponse($user, 'User retrieved successfully');
             }else{
                 return $this->sendError('unAuth', 401);
@@ -230,11 +232,11 @@ class UserAPIController extends Controller
                     $user->customFieldsValues()
                         ->updateOrCreate(['custom_field_id' => $value['custom_field_id']], $value);
                 }
-            
+
             }
             if ($request->has('password') && $request->password != null) {
                 $user = $this->userRepository->update(['password' => Hash::make($request->input('password'))], $id);
-            } 
+            }
         } catch (ValidatorException $e) {
             return $this->sendError($e->getMessage(), 401);
         }
@@ -306,7 +308,7 @@ class UserAPIController extends Controller
         } else {
             DB::table('password_resets')->insert(['email' => $user->email, 'token' => $resetPassCode]);
         }
-     
+
             Mail::to($user->email)->send(new ResetPassMail($user, $resetPassCode));
 
             return $this->sendResponse($resetPassCode, 'Reset sent successfully');
@@ -315,7 +317,7 @@ class UserAPIController extends Controller
             throw $th;
             return $this->sendError($th->getMessage(), 401);
         }
-       
+
     }
     public function confirmcode(Request $request)
     {

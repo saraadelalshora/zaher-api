@@ -152,6 +152,9 @@ class AppSettingController extends Controller
                 Flash::error('Translate not loaded');
                 return redirect()->back();
             }
+//            phpinfo();
+//            dd($inputs);
+//            die;
             $langFiles = $this->langManager->files();
             $langFiles = array_filter($langFiles, function ($v, $k) {
                 return $k == 'lang';
