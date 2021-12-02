@@ -72,9 +72,9 @@
         <a class="nav-link {{ Request::is('ads*') ? 'active' : '' }}" href="{!! route('ads.index') !!}">@if($icons)
                 <i class="nav-icon fa fa-folder"></i>@endif<p>{{trans('lang.ad_plural')}}</p></a>
     </li>
-    @can('about.create')
+    @can('about.index')
     <li class="nav-item">
-        <a class="nav-link {{ Request::is('about*') ? 'active' : '' }}" href="{!! route('about.create') !!}">@if($icons)
+        <a class="nav-link {{ Request::is('about*') ? 'active' : '' }}" href="{!! route('about.index') !!}">@if($icons)
                 <i class="nav-icon fa fa-folder"></i>@endif<p>{{trans('lang.about_plural')}}</p></a>
     </li>
     @endif

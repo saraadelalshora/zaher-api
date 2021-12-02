@@ -85,6 +85,19 @@ class ProductAPIController extends Controller
 
              }
  
+             if($request->name){
+                $products = $products
+                ->scopeQuery(function($query) use($request){
+                    return $query->where('name','like', '%'.$request->name.'%')->orWhere('Product_AR','like', '%'.$request->name.'%')->orWhere('Product_EN','like', '%'.$request->name.'%')
+                    ->orWhereHas('category',function($q) use($request)
+                    {
+                       return $q->where('name','like', '%'.$request->name.'%');
+                    });
+                });
+               
+
+             }
+ 
              $products = $products->paginate(15);
              
 //            $this->productRepository->orderBy('closed');

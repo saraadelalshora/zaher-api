@@ -67,10 +67,10 @@ class ProductRepository extends BaseRepository implements CacheableInterface
     public function groupedByMarkets()
     {
         $products = [];
-        foreach ($this->all() as $model) {
+        foreach ($this->where('market_id','!=',null)->get() as $model) {
             if(!empty($model->market)){
-            $products[$model->market->name][$model->id] = $model->name;
-        }
+               $products[$model->market->name][$model->id] = $model->name;
+             }
         }
         return $products;
     }
