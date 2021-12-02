@@ -30,7 +30,7 @@ class OfferDataTable extends DataTable
             ->editColumn('updated_at', function ($ad) {
                 return getDateColumn($ad, 'updated_at');
             })
-            ->addColumn('action', 'ads.datatables_actions')
+            ->addColumn('action', 'offer.datatables_actions')
             ->rawColumns(array_merge($columns, ['action']));
 
         return $dataTable;
