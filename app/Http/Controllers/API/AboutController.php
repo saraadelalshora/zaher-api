@@ -20,4 +20,17 @@ class AboutController extends Controller
         return $this->sendResponse($ads, 'about retrieved successfully');
     
        }
+
+       public function app_setting_global(){
+            
+        try{
+            $setting = setting()->all();
+    
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    
+        return $this->sendResponse($setting, 'Settings retrieved successfully');
+    
+       }
 }

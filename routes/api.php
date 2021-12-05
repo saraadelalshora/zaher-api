@@ -175,3 +175,4 @@ Route::middleware('auth:api')->group(function () {
 });
 Route::post('contactus', 'API\Contactcontroller@send');
 Route::get('about', 'API\AboutController@about');
+Route::get('app_setting_global', 'API\AboutController@app_setting_global');
