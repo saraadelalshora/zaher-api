@@ -101,4 +101,21 @@ class ProductRepository extends BaseRepository implements CacheableInterface
         $categories = Category::withSum('products.sells_count')->orderBy('products_sells_count_sum','DESC')->take(6)->get();
         return $categories;
     }
+    public function filterByPrice($query,$id){
+       
+        if($id == 'AllProducts'){
+            $productslist = Product::with('category');
+        }else{
+            $productslist = Product::with('category')->where('category_id',$id);
+        }
+      
+        if($query['query'] == 'htol'){
+            $products= $productslist->orderBy('price','DESC')->paginate(15);
+        }elseif($query['query'] == 'ltoh'){
+            $products= $productslist->orderBy('price','ASC')->paginate(15);
+        }else{
+            $products= $productslist->orderBy('sells_count','DESC')->paginate(15);
+        }
+        return $products;
+    }
 }

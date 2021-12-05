@@ -347,5 +347,20 @@ class ProductAPIController extends Controller
         return $this->sendResponse($categories->toArray(), 'categories retrieved successfully');
     }
 
+    public function filterByPrice(Request $request,$id){
+    
+        try{
+            $this->productRepository->pushCriteria(new RequestCriteria($request));
+            $this->productRepository->pushCriteria(new LimitOffsetCriteria($request));
+            $this->productRepository->pushCriteria(new ProductsOfFieldsCriteria($request));
+            $this->productRepository->pushCriteria(new ProductsOfCategoriesCriteria($request));
+            $products = $this->productRepository->filterByPrice($request->all(),$id);
+
+        } catch (RepositoryException $e) {
+            return $this->sendError($e->getMessage());
+        }
+
+        return $this->sendResponse($products->toArray(), 'Products retrieved successfully');
+    }
 
 }

@@ -53,6 +53,7 @@ Route::get('new-arrivals-by-category/{category}', 'API\ProductAPIController@newA
 Route::get('top-ads', 'API\AdApiController@topAds');
 Route::get('bottom-ads', 'API\AdApiController@bottomAds');
 Route::get('offer', 'API\OfferController@offers');
+Route::get('fillter/{category}', 'API\ProductAPIController@filterByPrice');
 
 
 Route::get('best-sellers-categories', 'API\ProductAPIController@bestSellersCategories');

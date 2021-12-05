@@ -212,6 +212,7 @@ class OrderAPIController extends Controller
      * @return \Illuminate\Http\JsonResponse|mixed
      */
     private function cashPayment(Request $request){
+       
         $input = $request->all();
         $amount = 0;
         try {
@@ -219,11 +220,12 @@ class OrderAPIController extends Controller
                 $request->only('user_id', 'order_status_id', 'tax', 'delivery_address_id', 'delivery_fee', 'hint')
             );
             Log::info($order);
-
+           
             $user = $this->userRepository->find($order->user_id);
-            $options = $user->carts[0]->options;
-            Log::info($options);
-
+           
+            // $options = $user->carts[0]->options;
+            // Log::info($options);
+           
             foreach ($input['products'] as $productOrder) {
                 $productOrder['order_id'] = $order->id;
                 $amount += $productOrder['price'] * $productOrder['quantity'];
@@ -242,8 +244,10 @@ class OrderAPIController extends Controller
             $this->orderRepository->update(['payment_id' => $payment->id], $order->id);
 
             $this->cartRepository->deleteWhere(['user_id' => $order->user_id]);
+            if(!empty($order->productOrders[0]->product->market)){
 
-            Notification::send($order->productOrders[0]->product->market->users, new NewOrder($order));
+                Notification::send($order->productOrders[0]->product->market->users, new NewOrder($order));
+            }
 
         } catch (ValidatorException $e) {
             return $this->sendError($e->getMessage());
